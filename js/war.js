@@ -97,7 +97,7 @@ function CreateElements() {
     bulletsc = 0;
     for (var i = 0; i < terrc; i++) {
         // cx cy in_speed
-        bullets.push([-1,-1,3+Math.ceil(Math.random()*7)]);
+        bullets.push([-1,-1,5+Math.ceil(Math.random()*5)]);
         bulletsc++;
     }
 }
@@ -113,6 +113,18 @@ function updateValues() {
         return;
     if (hero[1] != -1) {
         hero[2] = hero[2]-20;
+        var dead = false;
+        for (var i = 0; i < terrc && !dead; i++) {
+            if (Math.abs(terr[i][0]-hero[1])<=20 && hero[2]<=terr[i][1]+20) {
+                terrc -= 1;
+                terrim.splice(i,1);
+                terr.splice(i,1);
+                bullets.splice(i,1);
+                bulletsc--;
+                dead = true;
+                i -= 1;
+            }
+        }
         if (hero[2] < 0) {
             hero[1] = -1;
             hero[2] = -1;
@@ -143,6 +155,9 @@ function updateValues() {
     for (var i=0; i < bulletsc; i++) {
         if (bullets[i][0] != -1) {
             bullets[i][1] += bullets[i][2];
+            if (bullets[i][0]>=hero[0] && bullets[i][0]<= hero[0]+50 && bullets[i][1]>gamec.height-50) {
+                herodead = true;
+            }
             if (bullets[i][1] > gamec.height) {
                 bullets[i][0] = -1;
             }

@@ -176,9 +176,9 @@ function renderElem() {
         ctx.textAlign = "left";
         ctx.textBaseline = "top";
         if (herodead)
-            ctx.fillText("You Lose!",10,10);
+            ctx.fillText("You Lose! Refresh to Play Again :)",10,10);
         else
-            ctx.fillText("You Won!",10,10);
+            ctx.fillText("You Won!  Refresh to Play Again :)",10,10);
     }
     
     if (heroi && herodead==false) {

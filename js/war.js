@@ -10,6 +10,7 @@ var rightk = false;
 var spacek = false;
 var update_interval = 20;
 var herodead = false;
+var start = false;
 
 var terr_ready = [false,false,false,false,false];
 
@@ -91,36 +92,61 @@ function CreateElements() {
     for (var i = 0; i < terrc; i++) {
         var x = Math.ceil(Math.random()*(blockx-40)) + i*blockx + 20;
         var y = Math.ceil(Math.random()*blocky) + 20;
-        terr.push([x,y]);
+        terr.push([x,y,i]); // last is bullet pos
     }
 
     bulletsc = 0;
     for (var i = 0; i < terrc; i++) {
-        // cx cy in_speed
-        bullets.push([-1,-1,5+Math.ceil(Math.random()*5)]);
+        // cx cy in_speed update?
+        bullets.push([-1,-1,5+Math.ceil(Math.random()*5),true]);
         bulletsc++;
     }
 }
 
 function main() {
     clearC();
+    if (!start) {
+        if (spacek == true)
+            start=true;
+        else {
+            ctx.fillStyle = "rgb(250, 250, 250)";
+            ctx.font = "24px Helvetica";
+            ctx.textAlign = "left";
+            ctx.textBaseline = "top";
+            ctx.fillText("Press Space to Start :)",10,10);
+        }
+        return;
+    }
     updateValues();
     renderElem();
 }
 
 function updateValues() {
-    if (herodead || terrc==0)
+    if (herodead || terrc==0) {
+        if (spacek == true) {
+            hero = [];
+            terr = [];
+            bullets = [];
+            bulletsc = 0;
+            terrc = 0;
+            herodead = false;
+            leftk = false;
+            rightk = false;
+            spacek = false;
+            terrim = [terr1image,terr2image,terr3image,terr4image,terr5image];
+            CreateElements();
+        }
         return;
+    }
     if (hero[1] != -1) {
         hero[2] = hero[2]-20;
         var dead = false;
         for (var i = 0; i < terrc && !dead; i++) {
             if (Math.abs(terr[i][0]-hero[1])<=20 && hero[2]<=terr[i][1]+20) {
                 terrc -= 1;
+                bullets[terr[i][2]][3] = false;
                 terrim.splice(i,1);
                 terr.splice(i,1);
-                bullets.splice(i,1);
-                bulletsc--;
                 dead = true;
                 i -= 1;
             }
@@ -163,8 +189,14 @@ function updateValues() {
             }
         }
         else {
-            bullets[i][0] = terr[i][0];
-            bullets[i][1] = terr[i][1];
+            if (bullets[i][3] == true) {
+                for (var j=0; j < terrc; j++) {
+                    if (terr[j][2] == i)
+                        break;
+                }
+                bullets[i][0] = terr[j][0];
+                bullets[i][1] = terr[j][1];
+            }
         }
     }
 }
@@ -176,9 +208,9 @@ function renderElem() {
         ctx.textAlign = "left";
         ctx.textBaseline = "top";
         if (herodead)
-            ctx.fillText("You Lose! Refresh to Play Again :)",10,10);
+            ctx.fillText("You Lose! Press Space to Play Again :)",10,10);
         else
-            ctx.fillText("You Won!  Refresh to Play Again :)",10,10);
+            ctx.fillText("You Won! Press Space to Play Again :)",10,10);
     }
     
     if (heroi && herodead==false) {

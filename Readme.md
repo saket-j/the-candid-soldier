@@ -8,3 +8,5 @@ Game Play
 
 You need to compete with the monsters to kill them before they kill you.
 Use left or right arrow keys to move and space to shoot.
+
+Play the game: http://saket-j.github.com/the-candid-soldier/

@@ -106,8 +106,10 @@ function CreateElements() {
 function main() {
     clearC();
     if (!start) {
-        if (spacek == true)
+        if (spacek == true) {
             start=true;
+            spacek = false;
+        }
         else {
             ctx.fillStyle = "rgb(250, 250, 250)";
             ctx.font = "24px Helvetica";

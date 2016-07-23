@@ -2,8 +2,8 @@ var gamec;
 var ctx;
 var hero = [];
 var terr = [];
-var bullets = [];
 var bulletsc = 0;
+var bullets = [];
 var terrc = 0;
 var leftk = false;
 var rightk = false;
@@ -15,31 +15,31 @@ var start = false;
 var terr_ready = [false,false,false,false,false];
 
 var terr2image = new Image();
-terr2image.onload = function() {  
+terr2image.onload = function() {
     terr_ready[1] = true;
 };
 terr2image.src = 'icons/t2.png';
 
 var terr3image = new Image();
-terr3image.onload = function() {  
+terr3image.onload = function() {
     terr_ready[2] = true;
 };
 terr3image.src = 'icons/t3.png';
 
 var terr4image = new Image();
-terr4image.onload = function() {  
+terr4image.onload = function() {
     terr_ready[3] = true;
 };
 terr4image.src = 'icons/t4.png';
 
 var terr5image = new Image();
-terr5image.onload = function() {  
+terr5image.onload = function() {
     terr_ready[4] = true;
 };
 terr5image.src = 'icons/t5.png';
 
 var terr1image = new Image();
-terr1image.onload = function() {  
+terr1image.onload = function() {
     terr_ready[0] = true;
 };
 terr1image.src = 'icons/t1.png';
@@ -48,7 +48,7 @@ terrim = [terr1image,terr2image,terr3image,terr4image,terr5image];
 
 var heroi = false;
 var heroimage = new Image();
-heroimage.onload = function() {  
+heroimage.onload = function() {
     heroi = true;
 };
 heroimage.src = 'icons/hero.png';
@@ -214,16 +214,16 @@ function renderElem() {
         else
             ctx.fillText("You Won! Press Space to Play Again :)",10,10);
     }
-    
+
     if (heroi && herodead==false) {
         ctx.drawImage(heroimage, hero[0], gamec.height-50);
     }
-    
+
     for (var i = 0; i < terrc; i++) {
         if (terr_ready[i])
             ctx.drawImage(terrim[i], terr[i][0]-20, terr[i][1]-20);
     }
-    
+
     ctx.fillStyle = '#eee';
     for (var i = 0; i < bulletsc; i++) {
         if (bullets[i][0] == -1)
